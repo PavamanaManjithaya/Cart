@@ -49,20 +49,22 @@ class CartController extends Controller
             session()->flash('success', 'Food added to cart successfully');
 
         }
-    else
-        // if item not exist in cart then add to cart with quantity = 1
-        $cart[$id] = [
-            "id"=>$food->id,
-            "name" => $food->name,
-            "description" => $food->description,
-            "quantity" => 1,
-            "price" => $food->price,
-            "type" => $food->type
-        ];
+    else{
+ // if item not exist in cart then add to cart with quantity = 1
+ $cart[$id] = [
+    "id"=>$food->id,
+    "name" => $food->name,
+    "description" => $food->description,
+    "quantity" => 1,
+    "price" => $food->price,
+    "type" => $food->type
+];
 
-        session()->put('cart', $cart);
+session()->put('cart', $cart);
 
-        session()->flash('success', 'Food added to cart successfully');
+session()->flash('success', 'Food added to cart successfully');
+    }
+       
     }
     public function removecart($id)
     {
