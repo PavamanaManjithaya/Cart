@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Food;
+use App\Models\Fooditem;
 use App\Models\Category;
 class FoodController extends Controller
 {
@@ -14,7 +14,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods=Food::latest()->paginate(10);
+        $foods=Fooditem::latest()->paginate(10);
         return view('food.view',compact('foods'));
     }
 
@@ -43,7 +43,7 @@ class FoodController extends Controller
          'category'=>'required',
          'type'=>'required'
          ]);
-         Food::create([
+         Fooditem::create([
             'name'=>$request->get('name'),
             'description'=>$request->get('description'),
             'price'=>$request->get('price'),
@@ -72,7 +72,7 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        $food=Food::find($id);
+        $food=Fooditem::find($id);
         return view('food.edit',compact('food'));
     }
 
@@ -92,7 +92,7 @@ class FoodController extends Controller
             'category'=>'required',
             'type'=>'required'
             ]);
-            $food=Food::find($id);
+            $Fooditem=Food::find($id);
             $food->name=$request->get('name');
             $food->description=$request->get('description');
             $food->price=$request->get('price');
@@ -110,7 +110,7 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        $food=Food::find($id);
+        $food=Fooditem::find($id);
         $food->delete();  
         return redirect()->route('food.view')->with('messege','Food Deleted');
     }

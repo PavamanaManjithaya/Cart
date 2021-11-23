@@ -30,10 +30,7 @@
 
                             
                         
-                        @foreach (App\Models\Food::where('category_id', $category->id)->get() as $food)
-                        @if ($food->category_id != $category->id)
-                        Not Available..
-                        @else
+                        @foreach (App\Models\Fooditem::where('category_id', $category->id)->get() as $food)
                             @if ($food->type == 'Veg')
                                 <div class="d-flex align-items-center credits"><img src="/images/veg.png" width="16px">
                                 </div>
@@ -63,7 +60,7 @@
                             </div>
 
                            
-                            @endif
+                           
                         @endforeach
                        
 

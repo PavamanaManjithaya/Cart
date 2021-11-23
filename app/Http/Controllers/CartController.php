@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Food;
+use App\Models\Fooditem;
 class CartController extends Controller
 {
     public function addToCart($id)
     {
-        $food = Food::find($id);
+        $food = Fooditem::find($id);
 
         if(!$food) {
 
