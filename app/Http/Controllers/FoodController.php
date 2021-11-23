@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models;
+use App\Models\Food;
 use App\Models\Category;
 class FoodController extends Controller
 {
@@ -37,13 +37,13 @@ class FoodController extends Controller
     public function store(Request $request)
     {
      $this->validate($request,[
-         'name'=>'required|unique:food',
+         'name'=>'required',
          'description'=>'required',
          'price'=>'required',
          'category'=>'required',
          'type'=>'required'
          ]);
-         Models\Food::create([
+         Food::create([
             'name'=>$request->get('name'),
             'description'=>$request->get('description'),
             'price'=>$request->get('price'),
