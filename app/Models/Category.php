@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Food;
+use App\Models\food;
 class Category extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
     public function food(){
-        return $this->hasOne(Food::class,'category_id','id');
+        return $this->hasOne(food::class,'category_id','id');
     }
 }
