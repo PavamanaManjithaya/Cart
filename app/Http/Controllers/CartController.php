@@ -33,7 +33,7 @@ class CartController extends Controller
             ];
 
             session()->put('cart', $cart);
-            session()->flash('success', 'Food added to cart successfully');
+           return 1;
             
 
            
@@ -46,7 +46,7 @@ class CartController extends Controller
 
             session()->put('cart', $cart);
 
-            session()->flash('success', 'Food added to cart successfully');
+           return 1;
 
         }
     else{
@@ -62,7 +62,7 @@ class CartController extends Controller
 
 session()->put('cart', $cart);
 
-session()->flash('success', 'Food added to cart successfully');
+return 1;
     }
        
     }
