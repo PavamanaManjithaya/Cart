@@ -22,14 +22,14 @@
             <div class="col-sm-6 scrollspy-example" data-bs-spy="scroll" data-bs-target="#spy" data-bs-offset="0"
                 class="scrollspy-example" tabindex="0">
                 @foreach ($categories as $category)
-               
-               
+
+
                     <div class="p-card bg-white p-2 rounded px-3" id="scroll{{ $category->id }}">
                         <h3 class="mt-2">{{ $category->name }}</h3>
                         <hr class="new1">
 
-                            
-                        
+
+
                         @foreach (App\Models\Fooditem::where('category_id', $category->id)->get() as $food)
                             @if ($food->type == 'Veg')
                                 <div class="d-flex align-items-center credits"><img src="/images/veg.png" width="16px">
@@ -43,98 +43,132 @@
                             <h5 class="mt-2">{{ $food->name }}</h5><span
                                 class="badge badge-success py-1 mb-2">Offer Available</span>
                             <span class="d-block mb-5">{{ $food->description }}</span>
-                            <div class="d-flex justify-content-between stats">
-                                <div><i class="fa fa-coins"></i>
-                                    <span class="ml-2">Rs. {{ $food->price }}</span>
-                                </div>
-                                <div class="d-flex flex-row align-items-center">
-                                    <span class="ml-3"><a href="" onclick="add_cart({{ $food->id }})"
-                                            class="p-3"><i class="fa fa-plus"></i></a>CART <a href=""
-                                            onclick="remove_cart({{ $food->id }})" class="p-3"><i
-                                                class="fa fa-minus"></i></a>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="pb-3">
-                                <hr>
-                            </div>
+                            @php
+                                $val = 0;
+                                $qty = 0;
+                            @endphp
+                            @if (session('cart'))
+                                @foreach (session('cart') as $id => $details)
+                                    @if ($details['id'] == $food->id)
+                                        @php
+                                            $val = 1;
+                                            $qty = $details['quantity'];
+                                            break;
+                                        @endphp
+                                    @endif
+                                @endforeach
+                            @endif
 
-                           
-                           
-                        @endforeach
-                       
+                            @if ($val == 1)
+                                <div class="d-flex justify-content-between stats">
+                                    <div><i class="fa fa-coins"></i>
+                                        <span class="ml-2">Rs. {{ $food->price }}</span>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <span class="ml-3"><a href="" onclick="add_cart({{ $food->id }})"
+                                                class="p-3"><i
+                                                    class="fa fa-plus"></i></a>{{ $qty }} <a href=""
+                                                onclick="remove_cart({{ $food->id }})" class="p-3"><i
+                                                    class="fa fa-minus"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
 
-                    </div>
+                            @else
+                                <div class="d-flex justify-content-between stats">
+                                    <div><i class="fa fa-coins"></i>
+                                        <span class="ml-2">Rs. {{ $food->price }}</span>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <span class="ml-3"><a href="" onclick="add_cart({{ $food->id }})"
+                                                class="btn btn-primary">ADD</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            
+                        @endif
+
+
+
+                        <div class="pb-3">
+                            <hr>
+                        </div>
 
 
 
                 @endforeach
+
+
             </div>
-            <div class="col-sm-4 d-flex justify-content-center">
-                <div class="p-card bg-white p-2 rounded px-3" id="">
-                  <div class="justify-content-center">
+
+
+
+            @endforeach
+        </div>
+        <div class="col-sm-4 d-flex justify-content-center">
+            <div class="p-card bg-white p-2 rounded px-3" id="">
+                <div class="justify-content-center">
                     <h2 class="m-2 px-5">Cart</h2>
-                  </div>
-                    
-                    <hr class="new1">
-                    <?php $total = 0; ?>
-                    @if (session('cart'))
-                        @foreach (session('cart') as $id => $details)
-                            <?php $total += $details['price'] * $details['quantity']; ?>
+                </div>
+
+                <hr class="new1">
+                <?php $total = 0; ?>
+                @if (session('cart'))
+                    @foreach (session('cart') as $id => $details)
+                        <?php $total += $details['price'] * $details['quantity']; ?>
 
 
-                            @if ($details['type'] == 'Veg')
-                                <div class="d-flex align-items-center credits"><img src="/images/veg.png" width="16px">
-                                </div>
-
-                            @else
-                                <div class="d-flex align-items-center credits"><img src="/images/non-veg.png" width="16px">
-                                </div>
-
-                            @endif
-                            <h5 class="mt-2">{{ $details['name'] }}</h5>
-                            <div class="d-flex justify-content-between stats">
-                                <div><i class="fa fa-coins"></i>
-                                    <span class="ml-2">Rs. {{ $details['price'] }}</span>
-                                </div>
-                                <div class="d-flex flex-row align-items-center">
-                                    <span class="ml-3"><a href="" onclick="add_cart({{ $details['id'] }})"
-                                            class="p-3"><i
-                                                class="fa fa-plus"></i></a>{{ $details['quantity'] }} <a href=""
-                                            onclick="remove_cart({{ $details['id'] }})" class="p-3"><i
-                                                class="fa fa-minus"></i></a>
-                                    </span>
-                                    <span
-                                        class="badge badge-success py-1 mb-2">Rs.{{ $details['price'] * $details['quantity'] }}</span>
-                                </div>
+                        @if ($details['type'] == 'Veg')
+                            <div class="d-flex align-items-center credits"><img src="/images/veg.png" width="16px">
                             </div>
-                            <div class="pt-3"></div>
 
-                        @endforeach
-                        <hr>
+                        @else
+                            <div class="d-flex align-items-center credits"><img src="/images/non-veg.png" width="16px">
+                            </div>
+
+                        @endif
+                        <h5 class="mt-2">{{ $details['name'] }}</h5>
                         <div class="d-flex justify-content-between stats">
-                          <div>
+                            <div><i class="fa fa-coins"></i>
+                                <span class="ml-2">Rs. {{ $details['price'] }}</span>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                                <span class="ml-3"><a href="" onclick="add_cart({{ $details['id'] }})"
+                                        class="p-3"><i
+                                            class="fa fa-plus"></i></a>{{ $details['quantity'] }} <a href=""
+                                        onclick="remove_cart({{ $details['id'] }})" class="p-3"><i
+                                            class="fa fa-minus"></i></a>
+                                </span>
+                                <span
+                                    class="badge badge-success py-1 mb-2">Rs.{{ $details['price'] * $details['quantity'] }}</span>
+                            </div>
+                        </div>
+                        <div class="pt-3"></div>
+
+                    @endforeach
+                    <hr>
+                    <div class="d-flex justify-content-between stats">
+                        <div>
                             <h5 class="mt-2">Sub Total</h5>
-                          </div>
-                          <div class="d-flex flex-row align-items-center">
-                             
-                              <span
-                                  class="badge badge-success p-3 mb-2">Rs.{{ $total}}</span>
-                          </div>
-                      </div>
-                      <div class="d-flex justify-content-center p-2">
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+
+                            <span class="badge badge-success p-3 mb-2">Rs.{{ $total }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center p-2">
                         <span class="badge badge-primary px-5 py-2">Login to buy....</span>
                         <div>
-                    @else
-                        <div class="p-5"><span class="badge badge-danger p-2 mb-2">Your Cart is Empty</span>
-                        </div>
+                        @else
+                            <div class="p-5"><span class="badge badge-danger p-2 mb-2">Your Cart is Empty</span>
+                            </div>
 
 
-                    @endif
-                </div>
+                @endif
             </div>
-
         </div>
+
+    </div>
 
 
     </div>
