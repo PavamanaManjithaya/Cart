@@ -37,7 +37,7 @@ class FoodController extends Controller
     public function store(Request $request)
     {
      $this->validate($request,[
-         'name'=>'required|unique:foods',
+         'name'=>'required|unique:food',
          'description'=>'required',
          'price'=>'required',
          'category'=>'required',
@@ -92,6 +92,7 @@ class FoodController extends Controller
             'category'=>'required',
             'type'=>'required'
             ]);
+            $food=Food::find($id);
             $food->name=$request->get('name');
             $food->description=$request->get('description');
             $food->price=$request->get('price');
