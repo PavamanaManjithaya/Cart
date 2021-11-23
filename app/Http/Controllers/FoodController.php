@@ -37,7 +37,7 @@ class FoodController extends Controller
     public function store(Request $request)
     {
      $this->validate($request,[
-         'name'=>'required',
+         'name'=>'required|unique:foods',
          'description'=>'required',
          'price'=>'required',
          'category'=>'required',
@@ -96,7 +96,7 @@ class FoodController extends Controller
             $food->description=$request->get('description');
             $food->price=$request->get('price');
             $food->category_id=$request->get('category');
-            $food->image=$request->get('type');
+            $food->type=$request->get('type');
             $food->save();
             return redirect()->route('food.index')->with('messege','Food Updated');   
     }

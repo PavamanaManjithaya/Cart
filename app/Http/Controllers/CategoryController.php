@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required'
+            'name'=>'required|unique:categories'
         ]);
         Category::create(['name'=>$request->get('name')]);
          return redirect()->back()->with('messege','Category Created');
