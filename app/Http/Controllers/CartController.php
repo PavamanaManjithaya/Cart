@@ -34,10 +34,10 @@ class CartController extends Controller
 
             session()->put('cart', $cart);
            return 1;
-            
+        }  
 
            
-        }else if(isset($cart[$id])) {
+        if(isset($cart[$id])) {
 
         // if cart not empty then check if this product exist then increment quantity
        
@@ -47,9 +47,8 @@ class CartController extends Controller
             session()->put('cart', $cart);
 
            return 1;
-
         }
-    else{
+      
  // if item not exist in cart then add to cart with quantity = 1
  $cart[$id] = [
     "id"=>$food->id,
@@ -63,7 +62,6 @@ class CartController extends Controller
 session()->put('cart', $cart);
 
 return 1;
-    }
        
     }
     public function removecart($id)
