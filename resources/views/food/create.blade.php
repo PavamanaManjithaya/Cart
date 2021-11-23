@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label for="type">Type</label>
-                    <select name="type" id="status" class="form-control" >
+                    <select name="type" id="type" class="form-control" >
                         <option value="">Select Status</option>
                         <?php
                         $arr = array("Veg","Non-Veg");

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Food;
+use App\Models;
 use App\Models\Category;
 class FoodController extends Controller
 {
@@ -43,7 +43,7 @@ class FoodController extends Controller
          'category'=>'required',
          'type'=>'required'
          ]);
-         Food::Create([
+         Models\Food::create([
             'name'=>$request->get('name'),
             'description'=>$request->get('description'),
             'price'=>$request->get('price'),
