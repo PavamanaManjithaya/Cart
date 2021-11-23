@@ -13,3 +13,4 @@ class Category extends Model
         return $this->hasOne(Food::class,'category_id','id');
     }
 }
+
